@@ -1,9 +1,10 @@
 const { sql } = require('./../helper')
-module.exports = async function (request, response) {
-  const [ready] = await sql`SELECT 'yes' AS ready WHERE 1=1`
 
-  return response.send({
-    db: ready,
-    timestamp: new Date().toISOString()
-  })
+async function fetchSensorData () {
+  return sql`SELECT * from "sensor_data" ORDER BY alias ASC`
+}
+
+module.exports = async function (request, response) {
+  const sensorData = await fetchSensorData()
+  return this.render('index', { sensorData }, response)
 }

@@ -1,0 +1,27 @@
+{{#> layout title="Sensordata"}}
+
+{{#*inline "body"}}
+
+{{#each sensorData}}
+<div class="Box Box--blue m-5">
+  <div class="Box-header">
+    <h3 class="Box-title">
+      {{alias}}
+      <span class="Counter Counter--gray-dark">{{battery}}%</span>
+    </h3>
+  </div>
+  <div class="Box-row">
+    Temperature: {{temperature}}°C
+  </div>
+  <div class="Box-row">
+    Humidity: {{humidity}}%
+  </div>
+  <div class="Box-footer d">
+    Last update: {{last_update}}
+  </div>
+</div>
+{{/each}}
+
+{{/inline}}
+
+{{/layout}}
