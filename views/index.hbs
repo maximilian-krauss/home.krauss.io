@@ -1,4 +1,4 @@
-{{#> layout title="Sensordata"}}
+{{#> layout title="Sensordata - Krausshalt"}}
 
 {{#*inline "body"}}
 
@@ -31,10 +31,29 @@
     Humidity: {{humidity}}%
   </div>
   <div class="Box-footer d">
-    Last update: {{last_update}}
+    Last update: <span class="date-time" title="{{lastUpdate}}" data-time="{{lastUpdate}}">{{lastUpdate}}</span>
   </div>
 </div>
 {{/each}}
+
+<script type="text/javascript">
+  const documentReady = function(){
+    const dateTimeElements = document.getElementsByClassName('date-time')
+    for(const element of dateTimeElements) {
+      const parsedDate = moment(element.getAttribute('data-time')).local()
+      const difference = parsedDate.diff(moment())
+      const duration = moment.duration(difference).humanize()
+      element.innerHTML = `${duration} ago`
+    }
+  }
+
+  if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+    documentReady();
+  } else {
+    document.addEventListener("DOMContentLoaded", documentReady);
+  }
+
+</script>
 
 {{/inline}}
 
