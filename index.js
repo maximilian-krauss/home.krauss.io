@@ -23,7 +23,12 @@ async function createAndRun () {
     .route({
       method: 'GET',
       url: '/',
-      handler: require('./handler/root')
+      handler: require('./handler/root').html
+    })
+    .route({
+      method: 'GET',
+      url: '/sensor.json',
+      handler: require('./handler/root').json
     })
 
   await Promise.all([
