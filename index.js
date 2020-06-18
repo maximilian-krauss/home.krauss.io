@@ -1,6 +1,7 @@
 const Fastify = require('fastify')
 const config = require('./config')
 const { join } = require('path')
+const { createReadStream } = require('fs')
 
 async function createAndRun () {
   const fastify = Fastify({ logger: true, trustProxy: true })
@@ -29,6 +30,28 @@ async function createAndRun () {
       method: 'GET',
       url: '/sensor.json',
       handler: require('./handler/root').json
+    })
+    .route({
+      method: 'GET',
+      url: '/static/moment.min.js',
+      handler: (_, reply) => {
+        const filePath = join(__dirname, 'node_modules', 'moment', 'min', 'moment.min.js')
+        const stream = createReadStream(filePath, { encoding: 'utf8' })
+        reply
+          .header('content-type', 'text/javascript')
+          .send(stream)
+      }
+    })
+    .route({
+      method: 'GET',
+      url: '/static/primer.min.css',
+      handler: (_, reply) => {
+        const filePath = join(__dirname, 'node_modules', '@primer', 'css', 'dist', 'primer.css')
+        const stream = createReadStream(filePath, { encoding: 'utf8' })
+        reply
+          .header('content-type', 'text/css')
+          .send(stream)
+      }
     })
 
   await Promise.all([
