@@ -25,7 +25,7 @@
     "fastify-sensible": "^2.1.1",
     "got": "^11.3.0",
     "handlebars": "^4.7.6",
-    "moment": "^2.26.0",
+    "moment": "^2.27.0",
     "node-cache": "^5.1.1",
     "point-of-view": "^3.8.0",
     "postgres": "^1.0.2"
