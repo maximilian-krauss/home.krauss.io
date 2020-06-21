@@ -1,7 +1,5 @@
 const { get } = require('got').default
-
-const accessKey = '8443fba9b44316a1e3bd53689e8b106f'
-const city = 'berlin'
+const { weather: { city, accessKey } } = require('./../config')
 
 async function fetchCurrent () {
   const result = await get('http://api.weatherstack.com/current', {

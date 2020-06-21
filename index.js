@@ -3,6 +3,14 @@ const config = require('./config')
 const { join } = require('path')
 const { createReadStream } = require('fs')
 
+async function handleStaticRoute (request, reply, assetLocation, assetContentType) {
+  const filePath = join(__dirname, 'node_modules', assetLocation)
+  const stream = createReadStream(filePath, { encoding: 'utf8' })
+  return reply
+    .header('content-type', assetContentType)
+    .send(stream)
+}
+
 async function createAndRun () {
   const fastify = Fastify({ logger: true, trustProxy: true })
   fastify.setNotFoundHandler((_, reply) => reply.notFound())
@@ -16,42 +24,29 @@ async function createAndRun () {
       includeViewExtension: true,
       templates: join(__dirname, 'views/')
     })
-    .decorate('render', async (view, options, reply) => {
-      return reply.code(200)
-        .header('Content-Type', 'text/html; charset=utf-8')
-        .send(await fastify.view(view, options))
-    })
+    .decorate('render', async (view, options, reply) => reply.code(200)
+      .header('Content-Type', 'text/html; charset=utf-8')
+      .send(await fastify.view(view, options))
+    )
     .route({
       method: 'GET',
       url: '/',
-      handler: require('./handler/root').html
+      handler: require('./handler/index').html
     })
     .route({
       method: 'GET',
-      url: '/sensor.json',
-      handler: require('./handler/root').json
+      url: '/index.json',
+      handler: require('./handler/index').json
     })
     .route({
       method: 'GET',
       url: '/static/moment.min.js',
-      handler: (_, reply) => {
-        const filePath = join(__dirname, 'node_modules', 'moment', 'min', 'moment.min.js')
-        const stream = createReadStream(filePath, { encoding: 'utf8' })
-        reply
-          .header('content-type', 'text/javascript')
-          .send(stream)
-      }
+      handler: async (request, reply) => handleStaticRoute(request, reply, 'moment/min/moment.min.js', 'text/javascript')
     })
     .route({
       method: 'GET',
       url: '/static/primer.min.css',
-      handler: (_, reply) => {
-        const filePath = join(__dirname, 'node_modules', '@primer', 'css', 'dist', 'primer.css')
-        const stream = createReadStream(filePath, { encoding: 'utf8' })
-        reply
-          .header('content-type', 'text/css')
-          .send(stream)
-      }
+      handler: async (request, reply) => handleStaticRoute(request, reply, '@primer/css/dist/primer.css', 'text/css')
     })
 
   await Promise.all([

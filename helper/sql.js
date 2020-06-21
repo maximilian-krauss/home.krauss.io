@@ -7,7 +7,7 @@ const sql = postgres(uri, {
   ssl: {
     rejectUnauthorized: false
   },
-  max: 1,
+  max: 3,
   timeout: 3
 })
 

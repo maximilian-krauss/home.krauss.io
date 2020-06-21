@@ -1,8 +1,7 @@
-const { sql, weather } = require('./../helper')
+const { sql, weather } = require('../helper')
 
 async function fetchSensorData () {
-  return sql`SELECT * from "sensor_data" ORDER BY alias ASC`
-  // return results.map(item => ({ ...item, lastUpdate: item.last_update.toISOString() }))
+  return sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
 }
 
 async function fetchData () {
