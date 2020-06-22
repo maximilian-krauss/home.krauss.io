@@ -13,7 +13,10 @@ module.exports = {
   mqtt: {
     url: env.MQTT_URL,
     username: env.MQTT_USERNAME,
-    password: env.MQTT_PASSWORD
+    password: env.MQTT_PASSWORD,
+    topics: [
+      'shellies/+/sensor/#'
+    ]
   },
   server: {
     port: Number.parseInt(env.PORT || 3000, 10)

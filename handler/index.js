@@ -1,11 +1,10 @@
-const { sql, weather } = require('../helper')
-
-async function fetchSensorData () {
-  return sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
-}
+const { weather, sensors } = require('../helper')
 
 async function fetchData () {
-  const [sensorData, currentWeather] = await Promise.all([fetchSensorData(), weather.fetchCurrent()])
+  const [sensorData, currentWeather] = await Promise.all([
+    sensors.getAllSensors(),
+    weather.fetchCurrent()
+  ])
   return { sensorData, currentWeather }
 }
 
