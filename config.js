@@ -1,8 +1,11 @@
+const P = require('pino')
+
 require('dotenv').config()
 
 const { env } = process
 
 module.exports = {
+  environment: env.NODE_ENV,
   database: {
     uri: env.DATABASE_URL
   },
@@ -17,6 +20,9 @@ module.exports = {
     topics: [
       'shellies/+/sensor/#'
     ]
+  },
+  redis: {
+    url: env.REDIS_URL
   },
   server: {
     port: Number.parseInt(env.PORT || 3000, 10)

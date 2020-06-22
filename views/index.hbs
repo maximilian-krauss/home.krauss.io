@@ -14,6 +14,9 @@
   <div class="Box-row">
     Humidity: {{currentWeather.humidity}}%
   </div>
+  <div class="Box-footer d">
+    Last update: <span class="date-time" title="{{currentWeather.last_update}}" data-time="{{currentWeather.last_update}}"></span>
+  </div>
 </div>
 
 {{#each sensorData}}
