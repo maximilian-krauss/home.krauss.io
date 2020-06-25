@@ -1,6 +1,6 @@
 const MQTT = require('async-mqtt')
 const { logger, sensors } = require('./helper')
-const { mqtt: { url, username, password, topics } } = require('./config')
+const { environment, mqtt: { url, username, password, topics } } = require('./config')
 
 async function handleMessage (topic, message) {
   const value = message.toString()
@@ -15,6 +15,11 @@ async function handleMessage (topic, message) {
 }
 
 async function startConsuming () {
+  if (environment === 'local') {
+    logger.warn('Consumer paused due to local development, change NODE_ENV to start consuming')
+    return true
+  }
+
   const client = await MQTT.connectAsync(url, {
     username,
     password,
