@@ -19,10 +19,10 @@ async function updateSensorProperty (sensorId, property, value) {
 
 async function archiveSensorValues () {
   await sql`INSERT INTO historic_sensor_data
-  SELECT id, NOW(), temperature, humidity FROM sensor_data;
-  
-  DELETE FROM historic_sensor_data WHERE "timestamp" < (now() - '7 days'::interval);
-  REINDEX TABLE historic_sensor_data;`
+  SELECT id, NOW(), temperature, humidity FROM sensor_data;`
+
+  await sql`DELETE FROM historic_sensor_data WHERE "timestamp" < (now() - '7 days'::interval);`
+  await sql`REINDEX TABLE historic_sensor_data;`
 }
 
 async function getAllSensors () {
