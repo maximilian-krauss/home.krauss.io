@@ -9,9 +9,7 @@ async function updateSensorProperty (sensorId, property, value) {
   }
 
   await sql`INSERT INTO sensor_data ${sql(data, 'id', property, 'last_update')}
-    ON CONFLICT (id)
-    DO
-    UPDATE
+    ON CONFLICT (id) DO UPDATE
     SET ${sql(data, 'id', property, 'last_update')}`
 
   logger.info(`Updated ${property}=${value} for sensor ${sensorId}`)
