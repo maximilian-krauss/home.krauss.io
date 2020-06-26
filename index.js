@@ -1,11 +1,13 @@
 const { createAndRun } = require('./server')
 const { startConsuming } = require('./consumer')
+const { startArchiveTask } = require('./historic-collector')
 const { logger } = require('./helper')
 
 async function startApplication () {
   await Promise.all([
     createAndRun(),
-    startConsuming()
+    startConsuming(),
+    startArchiveTask()
   ])
 }
 

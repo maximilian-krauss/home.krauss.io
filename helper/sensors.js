@@ -17,11 +17,20 @@ async function updateSensorProperty (sensorId, property, value) {
   logger.info(`Updated ${property}=${value} for sensor ${sensorId}`)
 }
 
+async function archiveSensorValues () {
+  await sql`INSERT INTO historic_sensor_data
+  SELECT id, NOW(), temperature, humidity FROM sensor_data;
+  
+  DELETE FROM historic_sensor_data WHERE "timestamp" < (now() - '7 days'::interval);
+  REINDEX TABLE historic_sensor_data;`
+}
+
 async function getAllSensors () {
   return sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
 }
 
 module.exports = {
   updateSensorProperty,
-  getAllSensors
+  getAllSensors,
+  archiveSensorValues
 }
