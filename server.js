@@ -18,6 +18,7 @@ async function createAndRun () {
 
   fastify
     .register(require('fastify-cors', { origin: true }))
+    .register(require('fastify-compress'))
     .register(require('fastify-sensible'))
     .register(require('point-of-view'), {
       engine: { handlebars: require('handlebars') },
