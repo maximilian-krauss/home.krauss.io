@@ -27,8 +27,21 @@ async function getAllSensors () {
   return sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
 }
 
+async function getSensorDataById (sensorId) {
+  const [[current], history] = await Promise.all([
+    sql`SELECT * from "sensor_data" WHERE id=${sensorId}`,
+    sql`SELECT * FROM "historic_sensor_data" WHERE id=${sensorId} ORDER BY "timestamp" DESC`
+  ])
+
+  return {
+    current,
+    history
+  }
+}
+
 module.exports = {
   updateSensorProperty,
   getAllSensors,
-  archiveSensorValues
+  archiveSensorValues,
+  getSensorDataById
 }
