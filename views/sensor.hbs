@@ -63,7 +63,17 @@
     const options = { 
       responsive: true, 
       legend: { display: false },
-      tooltips: { enabled: true, intersect: false },
+      tooltips: { 
+        enabled: true,
+        intersect: false,
+        cornerRadius: 0,
+        callbacks: {
+          title: function(tooltipItem, data) {
+            const [{label}] = tooltipItem
+            return moment(label).format('DD.MM. HH:mm')
+          }
+        }
+      },
       scales: {
             xAxes: [{
                 type: 'time',
