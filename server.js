@@ -52,6 +52,11 @@ async function createAndRun () {
     })
     .route({
       method: 'GET',
+      url: '/static/chart.min.js',
+      handler: async (request, reply) => handleStaticRoute(request, reply, 'chart.js/dist/Chart.bundle.min.js', 'text/javascript')
+    })
+    .route({
+      method: 'GET',
       url: '/static/primer.min.css',
       handler: async (request, reply) => handleStaticRoute(request, reply, '@primer/css/dist/primer.css', 'text/css')
     })

@@ -20,6 +20,7 @@
   "dependencies": {
     "@primer/css": "^14.4.0",
     "async-mqtt": "^2.6.1",
+    "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
     "fastify": "^2.15.1",
     "fastify-compress": "^2.0.1",
