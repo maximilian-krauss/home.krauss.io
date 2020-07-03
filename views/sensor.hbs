@@ -105,18 +105,10 @@
             xAxes: [{
                 type: 'time',
                 time: { unit: 'day' },
-                ticks: {
-                    display: true
-                },
-                gridLines: {
-                  display: false
-                }
+                ticks: { display: true },
+                gridLines: { display: false }
             }],
-          yAxes: [{
-            gridLines: {
-                display: false
-            }
-          }]
+          yAxes: [{ gridLines: { display: false } }]
       }
     }
     new Chart(ctxTemperature, { type: 'line', data: tempData, options: { ...options }})
