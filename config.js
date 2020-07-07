@@ -6,6 +6,9 @@ const { env } = process
 
 module.exports = {
   environment: env.NODE_ENV,
+  sentry: {
+    dsn: env.SENTRY_URI
+  },
   database: {
     uri: env.DATABASE_URL
   },

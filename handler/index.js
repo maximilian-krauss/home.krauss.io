@@ -1,11 +1,16 @@
-const { weather, sensors } = require('../helper')
+const { weather, sensors, sentry } = require('../helper')
 
 async function fetchData () {
-  const [sensorData, currentWeather] = await Promise.all([
-    sensors.getAllSensors(),
-    weather.fetchCurrent()
-  ])
-  return { sensorData, currentWeather }
+  try {
+    const [sensorData, currentWeather] = await Promise.all([
+      sensors.getAllSensors(),
+      weather.fetchCurrent()
+    ])
+    return { sensorData, currentWeather }
+  } catch (error) {
+    sentry.captureException(error)
+    throw error
+  }
 }
 
 async function handleHtml (request, response) {

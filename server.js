@@ -2,7 +2,7 @@ const Fastify = require('fastify')
 const config = require('./config')
 const { join } = require('path')
 const { createReadStream } = require('fs')
-const { logger } = require('./helper')
+const { logger, sentry } = require('./helper')
 
 async function handleStaticRoute (request, reply, assetLocation, assetContentType) {
   const filePath = join(__dirname, 'node_modules', assetLocation)
@@ -15,7 +15,9 @@ async function handleStaticRoute (request, reply, assetLocation, assetContentTyp
 async function createAndRun () {
   const fastify = Fastify({ logger, trustProxy: true })
   fastify.setNotFoundHandler((_, reply) => reply.notFound())
-
+  fastify.addHook('onError', async function (request, reply, error) {
+    sentry.captureException(error)
+  })
   fastify
     .register(require('fastify-cors', { origin: true }))
     .register(require('fastify-compress'))

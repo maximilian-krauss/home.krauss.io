@@ -19,6 +19,7 @@
   "homepage": "https://github.com/maximilian-krauss/home.krauss.io#readme",
   "dependencies": {
     "@primer/css": "^15.0.0",
+    "@sentry/node": "^5.19.0",
     "async-mqtt": "^2.6.1",
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
@@ -30,7 +31,6 @@
     "handlebars": "^4.7.6",
     "ioredis": "^4.17.3",
     "moment": "^2.27.0",
-    "node-cache": "^5.1.2",
     "node-cron": "^2.0.3",
     "pino": "^6.3.2",
     "point-of-view": "^3.8.0",
