@@ -14,7 +14,7 @@ async function handleStaticRoute (request, reply, assetLocation, assetContentTyp
 
 async function createAndRun () {
   const fastify = Fastify({ logger, trustProxy: true })
-  fastify.setNotFoundHandler((_, reply) => reply.notFound())
+  fastify.setNotFoundHandler((_, reply) => reply.status(404).send({ message: 'Not found' }))
   fastify.addHook('onError', async function (request, reply, error) {
     sentry.captureException(error)
   })
