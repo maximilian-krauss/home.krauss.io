@@ -32,7 +32,7 @@
     "ioredis": "^4.17.3",
     "moment": "^2.27.0",
     "node-cron": "^2.0.3",
-    "pino": "^6.3.2",
+    "pino": "^6.4.0",
     "point-of-view": "^4.2.0",
     "postgres": "^1.0.2"
   }
