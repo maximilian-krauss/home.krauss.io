@@ -27,7 +27,7 @@
     "fastify-compress": "^3.2.1",
     "fastify-cors": "^4.0.0",
     "fastify-sensible": "^3.0.1",
-    "got": "^11.5.0",
+    "got": "^11.5.1",
     "handlebars": "^4.7.6",
     "ioredis": "^4.17.3",
     "moment": "^2.27.0",
