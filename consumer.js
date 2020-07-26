@@ -24,7 +24,7 @@ async function startConsuming () {
   const client = await MQTT.connectAsync(url, {
     username,
     password,
-    clientId: 'home-krauss-io-consumer'
+    clientId: `home-krauss-io-consumer-${environment}`
   })
 
   const errorHandler = err => {
