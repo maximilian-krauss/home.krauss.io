@@ -33,7 +33,7 @@ async function createAndRun () {
       .send(await fastify.view(view, options))
     )
     .route({
-      method: 'GET',
+      method: ['GET', 'HEAD'],
       url: '/',
       handler: require('./handler/index').html
     })
@@ -41,6 +41,11 @@ async function createAndRun () {
       method: 'GET',
       url: '/index.json',
       handler: require('./handler/index').json
+    })
+    .route({
+      method: ['GET', 'HEAD'],
+      url: '/health.json',
+      handler: require('./handler/health').json
     })
     .route({
       method: 'GET',
