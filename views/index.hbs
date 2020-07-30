@@ -40,9 +40,15 @@
       <div class="col-6 float-left border-right p-2">
         <h2 class="text-center">{{temperature}}°C</h2>
       </div>
+      {{#if isDoorSensor }}
+      <div class="col-6 float-right p-2">
+        <h2 class="text-center">{{state}}</h2>
+      </div>
+      {{else}}
       <div class="col-6 float-right p-2">
         <h2 class="text-center">{{humidity}}%</h2>
       </div>
+      {{/if}}
     </div>
   </div>
   <div class="Box-footer">

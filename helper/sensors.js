@@ -30,7 +30,11 @@ async function archiveSensorValues () {
 }
 
 async function getAllSensors () {
-  return sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
+  const sensors = await sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
+  return sensors.map(sensor => ({
+    ...sensor,
+    isDoorSensor: sensor.type === 'dw'
+  }))
 }
 
 async function getSensorDataById (sensorId) {
