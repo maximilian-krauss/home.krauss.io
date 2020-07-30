@@ -2,12 +2,21 @@ const MQTT = require('async-mqtt')
 const { logger, sensors, sentry } = require('./helper')
 const { environment, mqtt: { url, username, password, topics } } = require('./config')
 
+const supportedProperties = [
+  'humidity',
+  'temperature',
+  'battery',
+  'state'
+]
+
 async function handleMessage (topic, message) {
   const value = message.toString()
   logger.info({ topic, value })
 
   const [, sensorId,, property] = topic.split('/')
   try {
+    if (!supportedProperties.includes(property)) return
+
     await sensors.updateSensorProperty(sensorId, property, value)
   } catch (error) {
     logger.error(error, `Failed to update sensor data ${error.message}`)

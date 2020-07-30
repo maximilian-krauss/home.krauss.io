@@ -12,6 +12,9 @@ async function updateSensorProperty (sensorId, property, value) {
     ON CONFLICT (id) DO UPDATE
     SET ${sql(data, 'id', property, 'last_update')}`
 
+  await sql`INSERT INTO sensor_data_history (id, timestamp, property, value)
+  VALUES (${sensorId}, NOW(), ${property}, ${value})`
+
   logger.info(`Updated ${property}=${value} for sensor ${sensorId}`)
 }
 
@@ -21,6 +24,9 @@ async function archiveSensorValues () {
 
   await sql`DELETE FROM historic_sensor_data WHERE "timestamp" < (now() - '7 days'::interval);`
   await sql`REINDEX TABLE historic_sensor_data;`
+
+  await sql`DELETE FROM sensor_data_history WHERE "timestamp" < (now() - '7 days'::interval);`
+  await sql`REINDEX TABLE sensor_data_history;`
 }
 
 async function getAllSensors () {
