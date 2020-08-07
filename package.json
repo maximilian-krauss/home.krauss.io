@@ -24,7 +24,7 @@
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
     "fastify": "^3.2.0",
-    "fastify-compress": "^3.2.2",
+    "fastify-compress": "^3.3.0",
     "fastify-cors": "^4.1.0",
     "fastify-sensible": "^3.0.1",
     "got": "^11.5.1",
