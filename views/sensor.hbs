@@ -83,15 +83,15 @@
 
   function createChart(elementId, property, options, dataOptions) {
     const ctx = document.getElementById(elementId)
+    const propertyData = sensorData
+      .filter(item => item.property === property)
+      .map(item => ({...item, value: Number.parseFloat(item.value)}))
+
     const data = { 
-      labels: sensorData.map(d => Date.parse(d.timestamp)), 
+      labels: propertyData.map(d => Date.parse(d.timestamp)), 
       datasets: [{
         ...dataOptions,
-        /*borderColor,
-        backgroundColor,
-        label: 'Temperature',
-        */
-        data: sensorData.map(d => ({ t: Date.parse(d.timestamp), y: d[property] })),
+        data: propertyData.map(d => ({ t: Date.parse(d.timestamp), y: d.value })),
         borderWidth: 1,
         fill: true,
         pointRadius: 0,

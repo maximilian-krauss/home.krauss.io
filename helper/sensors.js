@@ -42,7 +42,7 @@ async function getAllSensors () {
 async function getSensorDataById (sensorId) {
   const [[current], history] = await Promise.all([
     sql`SELECT * from "sensor_data" WHERE id=${sensorId}`,
-    sql`SELECT * FROM "historic_sensor_data" WHERE id=${sensorId} ORDER BY "timestamp" DESC`
+    sql`SELECT * FROM "sensor_data_history" WHERE id=${sensorId} ORDER BY "timestamp" DESC`
   ])
 
   return {
