@@ -17,9 +17,15 @@
       <div class="col-6 float-left border-right p-2">
         <h2 class="text-center">{{current.temperature}}°C</h2>
       </div>
-      <div class="col-6 float-right p-2">
-        <h2 class="text-center">{{current.humidity}}%</h2>
-      </div>
+        {{#if current.isDoorSensor }}
+        <div class="col-6 float-right p-2">
+          <h2 class="text-center">{{current.state}}</h2>
+        </div>
+        {{else}}
+        <div class="col-6 float-right p-2">
+          <h2 class="text-center">{{current.humidity}}%</h2>
+        </div>
+        {{/if}}
     </div>
   </div>
   <div class="Box-footer">
@@ -42,6 +48,21 @@
   </div>
 </div>
 
+{{#if current.isDoorSensor }}
+<!-- Lock/Unlock history will go here -->
+<div class="Box Box--condensed m-2 mb-3">
+  <div class="Box-header">
+    <h2 class="Box-title">Events</h2>
+  </div>
+  <div class="Box-row">
+    <div class="container-lg clearfix">
+      <div class="col-12 float-left p-2">
+        <!-- Nice please for a table -->
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
 <div class="Box Box--condensed m-2 mb-3">
   <div class="Box-header">
     <h2 class="Box-title">Humidity History</h2>
@@ -54,39 +75,36 @@
     </div>
   </div>
 </div>
+{{/if}}
 
 <script type="text/javascript">
   const sensorData = JSON.parse('{{{historyJson}}}')
+  const sensor = JSON.parse('{{{sensorJson}}}')
 
-  const createChart = function() {
+  function createChart(elementId, property, options, dataOptions) {
+    const ctx = document.getElementById(elementId)
+    const data = { 
+      labels: sensorData.map(d => Date.parse(d.timestamp)), 
+      datasets: [{
+        ...dataOptions,
+        /*borderColor,
+        backgroundColor,
+        label: 'Temperature',
+        */
+        data: sensorData.map(d => ({ t: Date.parse(d.timestamp), y: d[property] })),
+        borderWidth: 1,
+        fill: true,
+        pointRadius: 0,
+        lineTension: 0.1
+      }]
+    }
+
+    new Chart(ctx, { type: 'line', data, options: { ...options }})
+  }
+
+  const buildData = function() {
     const ctxTemperature = document.getElementById('temperature-chart')
     const ctxHumidity = document.getElementById('humidity-chart')
-    const tempData = { 
-      labels: sensorData.map(d => Date.parse(d.timestamp)), 
-      datasets: [{
-        label: 'Temperature',
-        data: sensorData.map(d => ({ t: Date.parse(d.timestamp), y: d.temperature })),
-        borderWidth: 1,
-        borderColor: 'rgba(152, 202, 255, 1)',
-        fill: true,
-        pointRadius: 0,
-        backgroundColor: 'rgba(243, 249, 255, 1)',
-        lineTension: 0.1
-      }]
-    }
-    const humidityData = { 
-      labels: sensorData.map(d => Date.parse(d.timestamp)), 
-      datasets: [{
-        label: 'Humidity',
-        data: sensorData.map(d => ({ t: Date.parse(d.timestamp), y: d.humidity })),
-        borderWidth: 1,
-        borderColor: 'rgba(255, 65, 54, 1)',
-        fill: true,
-        pointRadius: 0,
-        backgroundColor: 'rgba(255, 65, 54, 0.2)',
-        lineTension: 0.1
-      }]
-    }
     const options = { 
       responsive: true, 
       legend: { display: false },
@@ -111,12 +129,25 @@
           yAxes: [{ gridLines: { display: false } }]
       }
     }
-    new Chart(ctxTemperature, { type: 'line', data: tempData, options: { ...options }})
-    new Chart(ctxHumidity, { type: 'line', data: humidityData, options: { ...options }})
+    
+    createChart(
+      'temperature-chart',
+      'temperature',
+      options,
+      { label: 'Temperature', borderColor: 'rgba(152, 202, 255, 1)', backgroundColor: 'rgba(243, 249, 255, 1)' }
+    )
+    if(!sensor.isDoorSensor) {
+      createChart(
+        'humidity-chart',
+        'humidity',
+        options,
+        { label: 'Humidity', borderColor: 'rgba(255, 65, 54, 1)', backgroundColor: 'rgba(255, 65, 54, 0.2)' }
+      )
+    }
   }
 
   const documentReady = function() {
-    createChart()
+    buildData()
   }
   document.addEventListener("document-ready", documentReady)
 

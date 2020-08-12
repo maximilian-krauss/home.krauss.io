@@ -4,7 +4,12 @@ async function handleHtml (request, response) {
   try {
     const { id } = request.params
     const data = await sensors.getSensorDataById(id)
-    return this.render('sensor', { ...data, historyJson: JSON.stringify(data.history) }, response)
+    return this.render('sensor',
+      {
+        ...data,
+        sensorJson: JSON.stringify(data.current),
+        historyJson: JSON.stringify(data.history)
+      }, response)
   } catch (error) {
     sentry.captureException(error)
     throw error

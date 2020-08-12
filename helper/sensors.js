@@ -29,12 +29,14 @@ async function archiveSensorValues () {
   await sql`REINDEX TABLE sensor_data_history;`
 }
 
+const mapSensor = sensor => ({
+  ...sensor,
+  isDoorSensor: sensor.type === 'dw'
+})
+
 async function getAllSensors () {
   const sensors = await sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
-  return sensors.map(sensor => ({
-    ...sensor,
-    isDoorSensor: sensor.type === 'dw'
-  }))
+  return sensors.map(mapSensor)
 }
 
 async function getSensorDataById (sensorId) {
@@ -44,7 +46,7 @@ async function getSensorDataById (sensorId) {
   ])
 
   return {
-    current,
+    current: mapSensor(current),
     history
   }
 }
