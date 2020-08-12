@@ -34,6 +34,13 @@ const mapSensor = sensor => ({
   isDoorSensor: sensor.type === 'dw'
 })
 
+const mapStateEvents = history => history
+  .filter(({ property }) => property === 'state')
+  .map(item => ({
+    timestamp: item.timestamp,
+    isClosed: item.value === 'close'
+  }))
+
 async function getAllSensors () {
   const sensors = await sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
   return sensors.map(mapSensor)
@@ -44,9 +51,11 @@ async function getSensorDataById (sensorId) {
     sql`SELECT * from "sensor_data" WHERE id=${sensorId}`,
     sql`SELECT * FROM "sensor_data_history" WHERE id=${sensorId} ORDER BY "timestamp" DESC`
   ])
+  const sensor = mapSensor(current)
 
   return {
-    current: mapSensor(current),
+    current: sensor,
+    stateEvents: sensor.isDoorSensor ? mapStateEvents(history) : [],
     history
   }
 }
