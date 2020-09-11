@@ -42,7 +42,7 @@ const mapStateEvents = history => history
   }))
 
 async function getAllSensors () {
-  const sensors = await sql`SELECT * from "sensor_data" ORDER BY last_update DESC`
+  const sensors = await sql`SELECT * from "sensor_data" ORDER BY alias ASC`
   return sensors.map(mapSensor)
 }
 
