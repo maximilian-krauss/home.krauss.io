@@ -30,7 +30,7 @@
     "got": "^11.7.0",
     "handlebars": "^4.7.6",
     "ioredis": "^4.17.3",
-    "moment": "^2.29.0",
+    "moment": "^2.29.1",
     "node-cron": "^2.0.3",
     "pino": "^6.7.0",
     "point-of-view": "^4.6.0",
