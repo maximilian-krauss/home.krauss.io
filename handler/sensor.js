@@ -16,6 +16,17 @@ async function handleHtml (request, response) {
   }
 }
 
+async function handleJson (request) {
+  try {
+    const { id } = request.params
+    return sensors.getSensorDataById(id)
+  } catch (error) {
+    sentry.captureException(error)
+    throw error
+  }
+}
+
 module.exports = {
-  html: handleHtml
+  html: handleHtml,
+  json: handleJson
 }

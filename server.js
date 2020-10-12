@@ -54,6 +54,11 @@ async function createAndRun () {
     })
     .route({
       method: 'GET',
+      url: '/sensor/:id/json',
+      handler: require('./handler/sensor').json
+    })
+    .route({
+      method: 'GET',
       url: '/static/moment.min.js',
       handler: async (request, reply) => handleStaticRoute(request, reply, 'moment/min/moment.min.js', 'text/javascript')
     })
