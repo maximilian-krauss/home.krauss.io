@@ -29,7 +29,7 @@
     "fastify-sensible": "^3.0.1",
     "got": "^11.8.0",
     "handlebars": "^4.7.6",
-    "ioredis": "^4.19.0",
+    "ioredis": "^4.19.1",
     "moment": "^2.29.1",
     "node-cron": "^2.0.3",
     "pino": "^6.7.0",
