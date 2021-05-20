@@ -22,10 +22,10 @@ async function archiveSensorValues () {
   await sql`INSERT INTO historic_sensor_data
   SELECT id, NOW(), temperature, humidity FROM sensor_data;`
 
-  await sql`DELETE FROM historic_sensor_data WHERE "timestamp" < (now() - '7 days'::interval);`
+  await sql`DELETE FROM historic_sensor_data WHERE "timestamp" < (now() - '14 days'::interval);`
   await sql`REINDEX TABLE historic_sensor_data;`
 
-  await sql`DELETE FROM sensor_data_history WHERE "timestamp" < (now() - '7 days'::interval);`
+  await sql`DELETE FROM sensor_data_history WHERE "timestamp" < (now() - '14 days'::interval);`
   await sql`REINDEX TABLE sensor_data_history;`
 }
 
