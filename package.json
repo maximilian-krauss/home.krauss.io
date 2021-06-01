@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/maximilian-krauss/home.krauss.io#readme",
   "dependencies": {
-    "@primer/css": "^17.2.0",
+    "@primer/css": "^17.2.1",
     "@sentry/node": "^6.5.0",
     "async-mqtt": "^2.6.1",
     "chart.js": "^2.9.4",
