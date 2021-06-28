@@ -21,7 +21,7 @@
     "@primer/css": "^17.3.0",
     "@sentry/node": "^6.7.2",
     "async-mqtt": "^2.6.1",
-    "chart.js": "^2.9.4",
+    "chart.js": "^3.4.0",
     "dotenv": "^10.0.0",
     "fastify": "^3.18.0",
     "fastify-compress": "^3.6.0",
